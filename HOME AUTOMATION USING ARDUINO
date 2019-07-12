@@ -1,0 +1,114 @@
+#include <IRremote.h>
+
+
+int IRpin = 9;  // pin for the IR Reciever
+  
+IRrecv irrecv(IRpin);
+decode_results results;
+String Incoming_value;                //Variable for storing Incoming_value
+void setup() 
+{
+  Serial.begin(9600); //Sets the data rate in bits per second (baud) for serial data transmission
+  irrecv.enableIRIn(); 
+  pinMode(13, OUTPUT);        //Sets digital pin 13 as output pin
+   pinMode(12, OUTPUT);   
+    pinMode(11, OUTPUT);   
+     pinMode(10, OUTPUT); 
+     digitalWrite(13, HIGH);
+     digitalWrite(12, HIGH);
+     digitalWrite(11, HIGH);
+     digitalWrite(10, HIGH); 
+     
+}
+void loop()
+{
+  if(Serial.available() > 0)  
+  { 
+    Incoming_value= Serial.readString();      //Read the incoming data and store it into variable Incoming_value
+    Serial.print(Incoming_value);        //Print Value of Incoming_value in Serial monitor
+    Serial.print("\n");        //New line 
+    if(Incoming_value == "f")            //Checks whether value of Incoming_value is equal to 1 
+      digitalWrite(13, HIGH);  //If value is 1 then LED turns ON
+    else if(Incoming_value == "F")       
+      digitalWrite(13, LOW);
+      else if(Incoming_value == "t1")       
+      digitalWrite(12, HIGH);
+      else if(Incoming_value == "T1")       
+      digitalWrite(12, LOW);
+      else if(Incoming_value == "t2")       
+      digitalWrite(11, HIGH);
+      else if(Incoming_value == "T2")       
+      digitalWrite(11, LOW);
+      else if(Incoming_value == "b")       
+      digitalWrite(10, HIGH);
+      else if(Incoming_value == "B")       
+      digitalWrite(10, LOW);
+      else if(Incoming_value == "OFF")
+      {digitalWrite(13, HIGH);
+     digitalWrite(12, HIGH);
+     digitalWrite(11, HIGH);
+     digitalWrite(10, HIGH); 
+      }  
+      else if(Incoming_value == "ON")
+      {digitalWrite(13, LOW);
+     digitalWrite(12, LOW);
+     digitalWrite(11, LOW);
+     digitalWrite(10, LOW); 
+      }
+     
+      
+         }
+         if (irrecv.decode(&results)) 
+    {
+     Serial.println(results.value); // Print the Serial 'results.value'
+      delay(10);
+
+     irrecv.resume();   // Receive the next value
+    }
+  
+if(results.value==1086292095)//
+{
+ digitalWrite(13, LOW);
+}
+if(results.value==1086275775)//
+{
+ digitalWrite(12, LOW);
+}
+if(results.value==1086308415)//
+{
+ digitalWrite(11, LOW);
+}
+if(results.value==1086267615)//
+{
+ digitalWrite(10, LOW);
+}
+if(results.value==1086300255)//
+{
+ digitalWrite(13, HIGH);
+}
+if(results.value==1086283935)//
+{
+ digitalWrite(12, HIGH);
+}
+if(results.value==1086316575)//
+{
+ digitalWrite(11, HIGH);
+}
+if(results.value==1086263535)//
+{
+ digitalWrite(10, HIGH);
+}
+if(results.value==1086296175)
+{digitalWrite(13, LOW);
+digitalWrite(12, LOW);
+digitalWrite(11, LOW);
+digitalWrite(10, LOW);
+}
+if(results.value==1086259455)
+{digitalWrite(13, HIGH);
+digitalWrite(12, HIGH);
+digitalWrite(11, HIGH);
+digitalWrite(10, HIGH);
+  }                            
+ 
+}                 
